@@ -1,0 +1,84 @@
+// { Driver Code Starts
+//Initial Template for C++
+
+#include <bits/stdc++.h>
+#include <string>
+
+using namespace std;
+
+
+ // } Driver Code Ends
+//User function Template for C++
+
+class Solution
+{
+    public:
+    //Function to find list of all words possible by pressing given numbers.
+        vector<string> map;
+    vector<string> res;
+        
+    Solution(){
+        map={"","","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    }
+    
+    void getString(int begin,int len,string digits,string ans){
+        if(begin==len){
+            res.push_back(ans);
+            return;
+        }
+        string letters=map[digits[begin]-'0'];
+        for(int i=0;i<letters.size();i++){
+            ans.push_back(letters[i]);
+            getString(begin+1,len,digits,ans);
+            ans.pop_back();
+        }
+                
+    }
+    
+    vector<string> letterCombinations(string digits) {
+        int len=digits.size();
+        if(len==0)
+            return res;
+        getString(0,len,digits,"");
+        return res;
+    }
+    vector<string> possibleWords(int a[], int N)
+    {
+        //Your code here
+        string digits="";
+        for(int i=0;i<N;i++){
+            digits.push_back(a[i]+'0');
+        }
+        return letterCombinations(digits);
+    }
+};
+
+
+// { Driver Code Starts.
+
+int main() {
+  
+	int T;
+	
+	cin >> T; //testcases
+	
+	while(T--){ //while testcases exist
+	   int N;
+	    
+	   cin >> N; //input size of array
+	   
+	   int a[N]; //declare the array
+	   
+	   for(int i =0;i<N;i++){
+	       cin >> a[i]; //input the elements of array that are keys to be pressed
+	   }
+	   
+	   Solution obj;
+	   
+	  vector <string> res = obj.possibleWords(a,N);
+	  for (string i : res) cout << i << " ";
+	   cout << endl;
+	}
+	
+	return 0;
+}  // } Driver Code Ends
